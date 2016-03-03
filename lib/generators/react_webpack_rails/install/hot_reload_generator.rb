@@ -22,11 +22,20 @@ module ReactWebpackRails
       end
 
       def partial
-        copy_file 'partial/_react_hot_assets.html.erb', 'app/views/layouts/_react_hot_assets.html.erb'
-
-        inject_into_file 'app/views/layouts/application.html.erb', after: "<body>\n" do <<-'HTML'.strip_heredoc
-          <%= render 'layouts/react_hot_assets' %>
-        HTML
+        engine = options[:template_engine]
+        copy_file "partial/_react_hot_assets.html.#{engine}", "app/views/layouts/_react_hot_assets.html.#{engine}"
+        
+        case engine
+          when 'haml' then
+            inject_into_file 'app/views/layouts/application.html.erb', after: "%body\n" do <<-'HTML'.strip_heredoc
+              = render 'layouts/react_hot_assets'
+            HTML
+            end
+          else
+            inject_into_file 'app/views/layouts/application.html.erb', after: "<body>\n" do <<-'HTML'.strip_heredoc
+              <%= render 'layouts/react_hot_assets' %>
+            HTML
+            end
         end
       end
     end
