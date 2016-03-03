@@ -11,6 +11,9 @@ module ReactWebpackRails
                    type: :boolean,
                    default: false,
                    desc: 'Force update tmp/package.json instead package.json'
+      class_option :template_engine,
+                   desc: 'Template engine to be invoked (erb or haml).'
+
 
       def package
         merge_options = options.tmp_package ? { package_file: 'tmp/package.json', force: true } : {}
