@@ -29,7 +29,7 @@ module ReactWebpackRails
         copy_file "partial/_react_hot_assets.html.#{engine}", "app/views/layouts/_react_hot_assets.html.#{engine}"
         
         case engine
-          when 'haml' then
+          when :haml then
             inject_into_file 'app/views/layouts/application.html.erb', after: "%body\n" do <<-'HTML'.strip_heredoc
               = render 'layouts/react_hot_assets'
             HTML
